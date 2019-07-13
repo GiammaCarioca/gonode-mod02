@@ -56,9 +56,16 @@ class AppointmentController {
     });
 
     if (!checkIsProvider) {
-      return res
-        .status(401)
-        .json({ error: 'You can only create appointments with providers' });
+      return res.status(401).json({
+        error: 'You can only create appointments with providers',
+      });
+    }
+
+    if (provider_id === req.userId) {
+      return res.status(401).json({
+        error:
+          'You cannot creat an appointment with yourself. Pick another provider',
+      });
     }
 
     /**
